@@ -29,7 +29,8 @@ def main():
         ground_group.update()
 
         bird_group.draw(window)
-        bird_group.update()
+        user_input = pygame.key.get_pressed()
+        bird_group.update(user_input)
 
         clock.tick(60)
         pygame.display.update()
