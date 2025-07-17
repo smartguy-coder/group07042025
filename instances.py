@@ -44,7 +44,8 @@ class Bird(pygame.sprite.Sprite):
         if self.velocity == 0:
             self.flap = False
 
+        self.image = pygame.transform.rotate(self.image, self.velocity * -5)
+
         if user_input[pygame.K_SPACE] and not self.flap and self.rect.y > 0:
             self.velocity -= 7
             self.flap = True
-
