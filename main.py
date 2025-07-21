@@ -14,6 +14,7 @@ window = pygame.display.set_mode(size=(WINDOW_WIDTH, WINDOW_HEIGHT))
 
 font = pygame.font.SysFont('Segoe', 30)
 
+
 def main():
     ground_group = pygame.sprite.Group()
     ground_group.add(Ground(x=0, y=500))
@@ -50,10 +51,6 @@ def main():
                     main()
                     break
 
-
-
-
-
         if pipe_timer <= 0 and bird_group.sprite.alive:
             x_top = WINDOW_WIDTH
             x_bottom = WINDOW_WIDTH
@@ -72,9 +69,6 @@ def main():
 
         score_text = font.render(f'Score: {score["score"]}', True, pygame.Color(220, 220, 220))
         window.blit(score_text, (20, 20))
-
-
-
 
         clock.tick(60)
         pygame.display.update()
