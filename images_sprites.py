@@ -11,3 +11,6 @@ birds_images = [
 
 top_pipe_image = pygame.image.load('assets/pipe_top.png')
 bottom_pipe_image = pygame.image.load('assets/pipe_bottom.png')
+
+
+game_over = pygame.image.load('assets/game_over.png')

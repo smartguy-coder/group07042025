@@ -14,7 +14,7 @@ class Ground(pygame.sprite.Sprite):
         self.rect.y = y
 
     def update(self, *args, **kwargs):
-        self.rect.x -= SCROLL_SPEED
+        self.rect.x -= SCROLL_SPEED['speed']
         if self.rect.x <= -WINDOW_WIDTH:
             self.kill()
 
@@ -30,9 +30,11 @@ class Bird(pygame.sprite.Sprite):
         self.rect.center = self.bird_start_position
         self.velocity = 0
         self.flap = False
+        self.is_alive = True
 
     def update(self, user_input):
-        self.fps += 1
+        if self.is_alive:
+            self.fps += 1
         if self.fps >= 30:
             self.fps = 0
         self.image = birds_images[self.fps // 10]
@@ -49,7 +51,7 @@ class Bird(pygame.sprite.Sprite):
 
         self.image = pygame.transform.rotate(self.image, self.velocity * -5)
 
-        if user_input[pygame.K_SPACE] and not self.flap and self.rect.y > 0:
+        if user_input[pygame.K_SPACE] and not self.flap and self.rect.y > 0 and self.is_alive:
             self.velocity -= 7
             self.flap = True
 
@@ -65,7 +67,7 @@ class Pipe(pygame.sprite.Sprite):
         self.enter = self.exit = self.passed = False
 
     def update(self, *args, **kwargs):
-        self.rect.x -= SCROLL_SPEED
+        self.rect.x -= SCROLL_SPEED['speed']
         if self.rect.x <= -WINDOW_WIDTH:
             self.kill()
 
