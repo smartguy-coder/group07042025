@@ -2,6 +2,7 @@ import pygame
 
 from constants import SCROLL_SPEED, WINDOW_WIDTH
 from images_sprites import ground_image, birds_images
+from dynamic_state import score
 
 
 class Ground(pygame.sprite.Sprite):
@@ -19,12 +20,14 @@ class Ground(pygame.sprite.Sprite):
 
 
 class Bird(pygame.sprite.Sprite):
+    bird_start_position = 200, 200
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.fps = 0
         self.image = birds_images[0]
         self.rect = self.image.get_rect()
-        self.rect.center = (200, 200)
+        self.rect.center = self.bird_start_position
         self.velocity = 0
         self.flap = False
 
@@ -52,14 +55,29 @@ class Bird(pygame.sprite.Sprite):
 
 
 class Pipe(pygame.sprite.Sprite):
-    def __init__(self, x, y, image):
+    def __init__(self, x, y, image, pipe_type):
         pygame.sprite.Sprite.__init__(self)
         self.image = image # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.pipe_type = pipe_type
+        self.enter = self.exit = self.passed = False
 
     def update(self, *args, **kwargs):
         self.rect.x -= SCROLL_SPEED
         if self.rect.x <= -WINDOW_WIDTH:
             self.kill()
+
+
+        if self.pipe_type == 'bottom':
+            if Bird.bird_start_position[0] > self.rect.topleft[0] and not self.passed:
+                self.enter = True
+
+        if Bird.bird_start_position[0] > self.rect.topright[0] and not self.passed:
+            self.exit = True
+
+        if self.enter and self.exit and not self.passed:
+            self.passed = True
+            score['score'] += 1
+
