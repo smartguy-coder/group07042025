@@ -49,3 +49,17 @@ class Bird(pygame.sprite.Sprite):
         if user_input[pygame.K_SPACE] and not self.flap and self.rect.y > 0:
             self.velocity -= 7
             self.flap = True
+
+
+class Pipe(pygame.sprite.Sprite):
+    def __init__(self, x, y, image):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def update(self, *args, **kwargs):
+        self.rect.x -= SCROLL_SPEED
+        if self.rect.x <= -WINDOW_WIDTH:
+            self.kill()
